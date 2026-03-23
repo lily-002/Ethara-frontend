@@ -16,6 +16,8 @@ import EmployeeTable from './components/employees/EmployeeTable';
 import Card from './components/ui/Card';
 import StateMessage from './components/ui/StateMessage';
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default function App() {
   const attendanceSectionRef = useRef(null);
   const [employees, setEmployees] = useState([]);
@@ -49,6 +51,7 @@ export default function App() {
     setEmployeesLoading(true);
     setEmployeesError('');
     try {
+      await delay(1000);
       const data = await getEmployees();
       setEmployees(data);
       setSelectedEmployeeId((prevSelected) => {
@@ -84,6 +87,7 @@ export default function App() {
     setAttendanceLoading(true);
     setAttendanceError('');
     try {
+      await delay(1000);
       const data = await getEmployeeAttendance(selectedEmployeeId);
       const filtered = attendanceFilterDate
         ? data.filter((record) => record.date === attendanceFilterDate)
@@ -109,6 +113,7 @@ export default function App() {
     setEmployeeSaving(true);
     setEmployeesError('');
     try {
+      await delay(1000);
       await createEmployee(payload);
       await loadEmployees();
     } catch (error) {
@@ -140,6 +145,7 @@ export default function App() {
     setAttendanceSaving(true);
     setAttendanceError('');
     try {
+      await delay(1000);
       await createAttendance(payload);
       await loadSummary();
       if (selectedEmployeeId === payload.employee) {
